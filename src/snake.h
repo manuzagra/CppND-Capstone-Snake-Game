@@ -3,38 +3,44 @@
 
 #include <vector>
 #include "SDL.h"
+#include "game_object.h"
 
-class Snake {
+class Snake: public GameObject {
  public:
   enum class Direction { kUp, kDown, kLeft, kRight };
 
-  Snake(int grid_width, int grid_height)
-      : grid_width(grid_width),
-        grid_height(grid_height),
-        head_x(grid_width / 2),
-        head_y(grid_height / 2) {}
+  Snake(config::Configuration const& _config)
+      : GameObject(
+          ObjectType::snake,
+          _config),
+        pose({config.GridWidth / 2.0F, config.GridHeight / 2.0F})
+          {
+            body.push_back({pose.x, pose.y});
+          }
+          
+  void Update() override;
 
-  void Update();
+  void Render(SDL_Renderer *sdl_renderer) const override;
+
+  bool IsCell(std::int32_t x, std::int32_t y) const override;
+
 
   void GrowBody();
-  bool SnakeCell(int x, int y);
+
+  void UpdateIsDead();
+
 
   Direction direction = Direction::kUp;
+  float speed{0.1F};
 
-  float speed{0.1f};
-  int size{1};
-  bool alive{true};
-  float head_x;
-  float head_y;
-  std::vector<SDL_Point> body;
+  std::int16_t size{1};
+  SDL_FPoint pose{}; // pose is in grid blocks
 
  private:
-  void UpdateHead();
-  void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
+  void UpdatePose();
+  void UpdateBody(SDL_Point &prev_cell);
 
   bool growing{false};
-  int grid_width;
-  int grid_height;
 };
 
 #endif

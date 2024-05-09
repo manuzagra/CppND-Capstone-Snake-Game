@@ -19,7 +19,7 @@ int main() {
   
   Renderer renderer(configuration.ScreenWidth, configuration.ScreenHeight, configuration.GridWidth, configuration.GridHeight);
   Controller controller;
-  Game game(configuration.GridWidth, configuration.GridHeight);
+  Game game(configuration);
   game.Run(controller, renderer, configuration.MsPerFrame());
   std::cout << "Game has terminated successfully!\n";
   std::cout << "Score: " << game.GetScore() << "\n";
