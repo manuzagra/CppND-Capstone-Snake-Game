@@ -2,19 +2,25 @@
 #include "controller.h"
 #include "game.h"
 #include "renderer.h"
+#include "configuration_helper.h"
 
 int main() {
-  constexpr std::size_t kFramesPerSecond{60};
-  constexpr std::size_t kMsPerFrame{1000 / kFramesPerSecond};
-  constexpr std::size_t kScreenWidth{640};
-  constexpr std::size_t kScreenHeight{640};
-  constexpr std::size_t kGridWidth{32};
-  constexpr std::size_t kGridHeight{32};
 
-  Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
+  config::Configuration configuration{};
+  try
+  {
+    configuration = config::parse(config::default_configuration_file_path);
+  }
+  catch(const std::exception& e)
+  {
+    std::cerr << e.what() << '\n';
+    std::cout << "Using default configuration!" << "\n";
+  }
+  
+  Renderer renderer(configuration.ScreenWidth, configuration.ScreenHeight, configuration.GridWidth, configuration.GridHeight);
   Controller controller;
-  Game game(kGridWidth, kGridHeight);
-  game.Run(controller, renderer, kMsPerFrame);
+  Game game(configuration.GridWidth, configuration.GridHeight);
+  game.Run(controller, renderer, configuration.MsPerFrame());
   std::cout << "Game has terminated successfully!\n";
   std::cout << "Score: " << game.GetScore() << "\n";
   std::cout << "Size: " << game.GetSize() << "\n";
