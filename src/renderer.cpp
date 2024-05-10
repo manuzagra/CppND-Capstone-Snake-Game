@@ -38,7 +38,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake, Food const &food) {
+void Renderer::Render(std::vector<std::shared_ptr<GameObject>>& objects) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -47,12 +47,10 @@ void Renderer::Render(Snake const snake, Food const &food) {
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
-  // Render food
-  food.Render(sdl_renderer);
-
-  // Render snake
-  snake.Render(sdl_renderer);
-
+  // Render objects
+  for(auto const& obj: objects){
+    obj->Render(sdl_renderer);
+  }
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }

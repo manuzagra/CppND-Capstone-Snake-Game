@@ -3,8 +3,8 @@
 #include "SDL.h"
 
 Game::Game(config::Configuration config)//Game(std::size_t grid_width, std::size_t grid_height)
-    : snake(config),
-      food(config),
+    : snake(std::make_shared<Snake>(config)),
+      food(std::make_shared<Food>(config)),
       engine(dev()),
       random_w(0, static_cast<int>(config.GridWidth - 1)),
       random_h(0, static_cast<int>(config.GridHeight - 1)) {
@@ -20,13 +20,15 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   int frame_count = 0;
   bool running = true;
 
+  std::vector<std::shared_ptr<GameObject>> objects{snake, food};
+
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, snake);
+    controller.HandleInput(running, *snake);
     Update();
-    renderer.Render(snake, food);
+    renderer.Render(objects);
 
     frame_end = SDL_GetTicks();
 
@@ -58,30 +60,30 @@ void Game::PlaceFood() {
     y = random_h(engine);
     // Check that the location is not occupied by a snake item before placing
     // food.
-    if (!snake.IsCell(x, y)) {
-      food.SetPose(x,y);
+    if (!snake->IsCell(x, y)) {
+      food->SetPose(x,y);
       return;
     }
   }
 }
 
 void Game::Update() {
-  if (!snake.alive) return;
+  if (!snake->alive) return;
 
-  snake.Update();
+  snake->Update();
 
-  int new_x = static_cast<int>(snake.pose.x);
-  int new_y = static_cast<int>(snake.pose.y);
+  int new_x = static_cast<int>(snake->pose.x);
+  int new_y = static_cast<int>(snake->pose.y);
 
   // Check if there's food over here
-  if (food.IsCell(new_x, new_y)) {
+  if (food->IsCell(new_x, new_y)) {
     score++;
     PlaceFood();
     // Grow snake and increase speed.
-    snake.GrowBody();
-    snake.speed += 0.02;
+    snake->GrowBody();
+    snake->speed += 0.02;
   }
 }
 
 int Game::GetScore() const { return score; }
-int Game::GetSize() const { return snake.size; }
+int Game::GetSize() const { return snake->size; }

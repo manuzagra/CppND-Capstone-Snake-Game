@@ -2,9 +2,9 @@
 #define RENDERER_H
 
 #include <vector>
+#include <memory>
 #include "SDL.h"
-#include "snake.h"
-#include "food.h"
+#include "game_object.h"
 
 class Renderer {
  public:
@@ -12,7 +12,7 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(Snake const snake, Food const &food);
+  void Render(std::vector<std::shared_ptr<GameObject>>& objects);
   void UpdateWindowTitle(int score, int fps);
 
  private:

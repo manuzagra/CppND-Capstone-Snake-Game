@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <random>
+#include <memory>
 #include "SDL.h"
 #include "controller.h"
 #include "renderer.h"
@@ -18,8 +19,8 @@ class Game {
   int GetSize() const;
 
  private:
-  Snake snake;
-  Food food;
+  std::shared_ptr<Snake> snake;
+  std::shared_ptr<Food> food;
 
   std::random_device dev;
   std::mt19937 engine;
