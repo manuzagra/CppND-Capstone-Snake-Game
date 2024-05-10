@@ -38,7 +38,8 @@ class Snake: public GameObject {
 
  private:
   void UpdatePose();
-  void UpdateBody(SDL_Point &prev_cell);
+  void UpdateBody();
+  bool CheckSelfCollide() const;
 
   bool growing{false};
 };
