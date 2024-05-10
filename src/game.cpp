@@ -1,4 +1,6 @@
 #include "game.h"
+#include <thread>
+#include <chrono>
 #include <iostream>
 #include "SDL.h"
 
@@ -17,8 +19,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_start;
   Uint32 frame_end;
   Uint32 frame_duration;
-  int frame_count = 0;
-  bool running = true;
+
+  std::thread t(&Game::UpdateWindowTitle, this, std::ref(renderer));
 
   std::vector<std::shared_ptr<GameObject>> objects{snake, food};
 
@@ -28,7 +30,10 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, *snake);
     Update();
-    renderer.Render(objects);
+    {
+      const std::lock_guard<std::mutex> lock(renderer_mutex);
+      renderer.Render(objects);
+    }
 
     frame_end = SDL_GetTicks();
 
@@ -37,13 +42,6 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     frame_count++;
     frame_duration = frame_end - frame_start;
 
-    // After every second, update the window title.
-    if (frame_end - title_timestamp >= 1000) {
-      renderer.UpdateWindowTitle(score, frame_count);
-      frame_count = 0;
-      title_timestamp = frame_end;
-    }
-
     // If the time for this frame is too small (i.e. frame_duration is
     // smaller than the target ms_per_frame), delay the loop to
     // achieve the correct frame rate.
@@ -51,6 +49,18 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       SDL_Delay(target_frame_duration - frame_duration);
     }
   }
+
+  t.join();
+}
+
+void Game::UpdateWindowTitle(Renderer &renderer){
+  while(running){
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    const std::lock_guard<std::mutex> lock(renderer_mutex);
+    renderer.UpdateWindowTitle(score, frame_count);
+    frame_count = 0;
+  }
+
 }
 
 void Game::PlaceFood() {

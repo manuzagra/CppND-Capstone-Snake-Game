@@ -3,6 +3,7 @@
 
 #include <random>
 #include <memory>
+#include <mutex>
 #include "SDL.h"
 #include "controller.h"
 #include "renderer.h"
@@ -28,9 +29,14 @@ class Game {
   std::uniform_int_distribution<int> random_h;
 
   int score{0};
+  int frame_count{0};
+  bool running{true};
 
   void PlaceFood();
   void Update();
+  void UpdateWindowTitle(Renderer &renderer);
+
+  std::mutex renderer_mutex;
 };
 
 #endif
