@@ -26,6 +26,15 @@ namespace config
             std::istringstream linestream(line);
 
             linestream >> config.FramesPerSecond >> config.ScreenWidth >> config.ScreenHeight >> config.GridWidth >> config.GridHeight;
+
+            auto ScreenWidth = (config.ScreenWidth / config.GridWidth) * config.GridWidth;
+            auto ScreenHeight = (config.ScreenHeight / config.GridHeight) * config.GridHeight;
+
+            if (config.ScreenWidth != ScreenWidth || config.ScreenHeight != ScreenHeight){
+                std::cout << "Adjusting screen resolution to " << ScreenWidth << "x" << ScreenHeight << "\n";
+                config.ScreenWidth = ScreenWidth;
+                config.ScreenHeight = ScreenHeight;
+            }
         }
         else
         {

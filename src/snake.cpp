@@ -37,8 +37,8 @@ void Snake::UpdateBody() {
 
   // the cell of the pose
   SDL_Point pose_cell{
-      std::floor(pose.x),
-      std::floor(pose.y)};
+      static_cast<std::int32_t>(pose.x),
+      static_cast<std::int32_t>(pose.y)};
 
   // the cell of the head
   SDL_Point head_cell{

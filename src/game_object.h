@@ -28,13 +28,13 @@ public:
     virtual bool IsCell(std::int32_t x, std::int32_t y) const = 0;
     bool Collide(GameObject const &other) const
     {
-        // for (auto const &part : body)
-        // {
-        //     if (other.IsCell(part.x, part.y))
-        //     {
-        //         return true;
-        //     }
-        // }
+        for (auto const &part : body)
+        {
+            if (other.IsCell(part.x, part.y))
+            {
+                return true;
+            }
+        }
         return false;
     }
 

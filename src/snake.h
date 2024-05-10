@@ -15,7 +15,7 @@ class Snake: public GameObject {
           _config),
         pose({config.GridWidth / 2.0F, config.GridHeight / 2.0F})
           {
-            body.push_back({pose.x, pose.y});
+            body.push_back({static_cast<std::int32_t>(pose.x), static_cast<std::int32_t>(pose.y)});
           }
           
   void Update() override;
