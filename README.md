@@ -19,10 +19,10 @@ In this project, you can build your own C++ application or extend this Snake gam
   * [X] The project demonstrates an understanding of C++ functions and control structures.
     * Everywhere in the project. There are control, loops, good software design...
   * [X] The project reads data from a file and process the data, or the program writes data to a file.
-    * Configuration is read from a file.
+    * Configuration is read from a file so you do not have to compile it every time you change it.
   * [ ] The project accepts user input and processes the input.
   * [X] The project uses data structures and immutable variables.
-    * Constant variables as part of the classes.
+    * Constant variables as part of the classes, for example, configuration.h or game_object.h
 * Object Oriented Programming [5/3]
   * [X] One or more classes are added to the project with appropriate access specifiers for class members.
     * GameObject, Snake, Food, Configuration.
@@ -45,10 +45,10 @@ In this project, you can build your own C++ application or extend this Snake gam
     * Renderer class followws it.
   * [ ] The project uses move semantics to move data instead of copying it, where possible.
   * [X] The project uses smart pointers instead of raw pointers.
-    * The snake and the food are shared_ptr.
+    * The snake and the food are shared_ptr (see game adn renderer).
 * Concurrency [2/2]
   * [X] The project uses multithreading.
-    * The update of the title of the windows runs in a different thread.
+    * The update of the title of the windows runs in a different thread (see game).
   * [ ] A promise and future is used in the project.
   * [X] A mutex or lock is used in the project.
     * A mutex protects the use of the renderer in the class Game.
