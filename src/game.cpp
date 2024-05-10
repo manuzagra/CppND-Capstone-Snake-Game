@@ -68,7 +68,7 @@ void Game::PlaceFood() {
 }
 
 void Game::Update() {
-  if (!snake->alive) return;
+  if (!snake->Alive()) return;
 
   snake->Update();
 

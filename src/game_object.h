@@ -20,10 +20,10 @@ public:
     }
     virtual ~GameObject() = default;
 
-    ObjectType Type() const
-    {
-        return type;
-    }
+    ObjectType Type() const { return type; }
+    bool Alive() const { return alive; }
+    void Alive(bool val) { alive = val; }
+    bool Needed() const { return needed; }
     virtual void Update() = 0;
     virtual void Render(SDL_Renderer *sdl_renderer) const = 0;
     virtual bool IsCell(std::int32_t x, std::int32_t y) const = 0;
@@ -39,14 +39,13 @@ public:
         return false;
     }
 
-    ObjectType type{};
-
     std::vector<SDL_Point> body{};
 
+protected:
+    const ObjectType type{};
+    const config::Configuration config{};
     bool alive{true};
-    bool needed{false};
-
-    config::Configuration config{};
+    const bool needed{false};
 };
 
 #endif
