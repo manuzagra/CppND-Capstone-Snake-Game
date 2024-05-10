@@ -14,8 +14,7 @@ namespace config
     std::int16_t GridWidth{32};
     std::int16_t GridHeight{32};
 
-
-    std::int16_t MsPerFrame(){return 1000 / FramesPerSecond;}
+    std::int16_t MsPerFrame() { return 1000 / FramesPerSecond; }
   };
 
 }

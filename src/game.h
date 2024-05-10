@@ -11,15 +11,16 @@
 #include "food.h"
 #include "configuration.h"
 
-class Game {
- public:
+class Game
+{
+public:
   Game(config::Configuration config);
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
   int GetScore() const;
   int GetSize() const;
 
- private:
+private:
   std::shared_ptr<Snake> snake;
   std::shared_ptr<Food> food;
 
