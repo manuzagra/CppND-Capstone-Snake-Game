@@ -2,13 +2,11 @@
 #include <iostream>
 #include <string>
 
-Renderer::Renderer(const std::size_t screen_width,
-                   const std::size_t screen_height,
-                   const std::size_t grid_width, const std::size_t grid_height)
-    : screen_width(screen_width),
-      screen_height(screen_height),
-      grid_width(grid_width),
-      grid_height(grid_height) {
+Renderer::Renderer(config::Configuration const& config)
+    : screen_width(config.ScreenWidth),
+      screen_height(config.ScreenHeight),
+      grid_width(config.GridWidth),
+      grid_height(config.GridHeight) {
   // Initialize SDL
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cerr << "SDL could not initialize.\n";
@@ -37,6 +35,61 @@ Renderer::~Renderer() {
   SDL_DestroyWindow(sdl_window);
   SDL_Quit();
 }
+
+  Renderer::Renderer(const Renderer &src) :
+    sdl_window(src.sdl_window),
+    sdl_renderer(src.sdl_renderer),
+    grid_height(src.grid_height),
+    grid_width(src.grid_width),
+    screen_height(src.screen_height),
+    screen_width(src.screen_width)
+  {}
+
+  Renderer::Renderer(Renderer &&src) noexcept :
+    sdl_window(std::exchange(src.sdl_window, nullptr)),
+    sdl_renderer(std::exchange(src.sdl_renderer, nullptr)),
+    grid_height(std::exchange(src.grid_height, 0)),
+    grid_width(std::exchange(src.grid_width, 0)),
+    screen_height(std::exchange(src.screen_height, 0)),
+    screen_width(std::exchange(src.screen_width, 0))
+  {}
+
+  Renderer& Renderer::operator=(const Renderer &src) {
+    if (this == &src)
+      return *this;
+
+    sdl_window = src.sdl_window;
+    sdl_renderer = src.sdl_renderer;
+    grid_height = src.grid_height;
+    grid_width = src.grid_width;
+    screen_height = src.screen_height;
+    screen_width = src.screen_width;
+
+    return *this;
+  }
+
+  Renderer& Renderer::operator=(Renderer&& src) noexcept {
+    if (this != &src) {
+      SDL_DestroyWindow(sdl_window);
+      SDL_DestroyRenderer(sdl_renderer);
+    }
+
+    sdl_window = src.sdl_window;
+    sdl_renderer = src.sdl_renderer;
+    grid_height = src.grid_height;
+    grid_width = src.grid_width;
+    screen_height = src.screen_height;
+    screen_width = src.screen_width;
+
+    src.sdl_window = nullptr;
+    src.sdl_renderer = nullptr;
+    src.grid_height = 0;
+    src.grid_width = 0;
+    src.screen_height = 0;
+    src.screen_width = 0;
+
+    return *this;
+  }
 
 void Renderer::Render(std::vector<std::shared_ptr<GameObject>>& objects) {
   SDL_Rect block;

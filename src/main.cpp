@@ -17,7 +17,7 @@ int main() {
     std::cout << "Using default configuration!" << "\n";
   }
   
-  Renderer renderer(configuration.ScreenWidth, configuration.ScreenHeight, configuration.GridWidth, configuration.GridHeight);
+  Renderer renderer(configuration);
   Controller controller;
   Game game(configuration);
   game.Run(controller, renderer, configuration.MsPerFrame());
