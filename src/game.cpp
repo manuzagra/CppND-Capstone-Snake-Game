@@ -4,6 +4,7 @@
 
 Game::Game(config::Configuration config)//Game(std::size_t grid_width, std::size_t grid_height)
     : snake(config),
+      food(config),
       engine(dev()),
       random_w(0, static_cast<int>(config.GridWidth - 1)),
       random_h(0, static_cast<int>(config.GridHeight - 1)) {
@@ -58,8 +59,7 @@ void Game::PlaceFood() {
     // Check that the location is not occupied by a snake item before placing
     // food.
     if (!snake.IsCell(x, y)) {
-      food.x = x;
-      food.y = y;
+      food.SetPose(x,y);
       return;
     }
   }
@@ -74,7 +74,7 @@ void Game::Update() {
   int new_y = static_cast<int>(snake.pose.y);
 
   // Check if there's food over here
-  if (food.x == new_x && food.y == new_y) {
+  if (food.IsCell(new_x, new_y)) {
     score++;
     PlaceFood();
     // Grow snake and increase speed.
