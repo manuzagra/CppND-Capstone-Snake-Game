@@ -35,7 +35,7 @@ In this project, you can build your own C++ application or extend this Snake gam
   * [X] Classes follow an appropriate inheritance hierarchy with virtual and override functions.
     * GameObject, Snake, Food.
   * [ ] Templates generalize functions or classes in the project.
-* Memory Management [3/3]
+* Memory Management [4/3]
   * [X] The project makes use of references in function declarations.
     * Almost everywhere.
   * [ ] The project uses destructors appropriately.
@@ -46,7 +46,7 @@ In this project, you can build your own C++ application or extend this Snake gam
   * [ ] The project uses move semantics to move data instead of copying it, where possible.
   * [X] The project uses smart pointers instead of raw pointers.
     * The snake and the food are shared_ptr.
-* Concurrency [3/2]
+* Concurrency [2/2]
   * [X] The project uses multithreading.
     * The update of the title of the windows runs in a different thread.
   * [ ] A promise and future is used in the project.
