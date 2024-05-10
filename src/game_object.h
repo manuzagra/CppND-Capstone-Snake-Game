@@ -15,7 +15,10 @@ enum class ObjectType
 class GameObject
 {
 public:
-    GameObject(ObjectType _type, config::Configuration _config, bool _needed = false) : type(_type), config(_config), needed(_needed)
+    GameObject(ObjectType _type, config::Configuration _config, bool _needed) : type(_type), config(_config), needed(_needed)
+    {
+    }
+    GameObject(ObjectType _type, config::Configuration _config) : GameObject(_type, _config, false)
     {
     }
     virtual ~GameObject() = default;
