@@ -8,6 +8,52 @@ The Capstone Project gives you a chance to integrate what you've learned through
 
 In this project, you can build your own C++ application or extend this Snake game, following the principles you have learned throughout this Nanodegree Program. This project will demonstrate that you can independently create applications using a wide range of C++ features.
 
+## Rubric
+* README [3/3]
+  * [X] A README with instructions is included with the project.
+  * [X] The README indicates the new features you added to the game.
+  * [X] The README includes information about each rubric point addressed.
+* Compiling and Testing [1/1]
+  * [X] The submission must compile and run without errors on the Udacity project workspace.
+* Loops, Functions, I/O [3/2]
+  * [X] The project demonstrates an understanding of C++ functions and control structures.
+    * Everywhere in the project. There are control, loops, good software design...
+  * [X] The project reads data from a file and process the data, or the program writes data to a file.
+    * Configuration is read from a file.
+  * [ ] The project accepts user input and processes the input.
+  * [X] The project uses data structures and immutable variables.
+    * Constant variables as part of the classes.
+* Object Oriented Programming [5/3]
+  * [X] One or more classes are added to the project with appropriate access specifiers for class members.
+    * GameObject, Snake, Food, Configuration.
+  * [X] Class constructors utilize member initialization lists.
+    * GameObject, Snake, Food, Configuration.
+  * [X] Classes abstract implementation details from their interfaces.
+    * GameObject, Snake, Food.
+  * [X] Overloaded functions allow the same function to operate on different parameters.
+    * GameObject constructor.
+  * [X] Classes follow an appropriate inheritance hierarchy with virtual and override functions.
+    * GameObject, Snake, Food.
+  * [ ] Templates generalize functions or classes in the project.
+* Memory Management [3/3]
+  * [X] The project makes use of references in function declarations.
+    * Almost everywhere.
+  * [ ] The project uses destructors appropriately.
+  * [X] The project uses scope / Resource Acquisition Is Initialization (RAII) where appropriate.
+    * std::lock_guard is a RAII and it is used in game.cpp.
+  * [X] The project follows the Rule of 5.
+    * Renderer class followws it.
+  * [ ] The project uses move semantics to move data instead of copying it, where possible.
+  * [X] The project uses smart pointers instead of raw pointers.
+    * The snake and the food are shared_ptr.
+* Concurrency [3/2]
+  * [X] The project uses multithreading.
+    * The update of the title of the windows runs in a different thread.
+  * [ ] A promise and future is used in the project.
+  * [X] A mutex or lock is used in the project.
+    * A mutex protects the use of the renderer in the class Game.
+  * [ ] A condition variable is used in the project.
+
 ## Dependencies for Running Locally
 * cmake >= 3.7
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
